@@ -39,6 +39,7 @@ public class MyDialogFragment extends DialogFragment {
         Log.d(TAG, getTag() + " onCreateView");
         View view = inflater.inflate(R.layout.custom_alert, container, false);
         ButterKnife.bind(this, view);
+        editText.setText(getTag());
         return view;
     }
 
@@ -95,7 +96,8 @@ public class MyDialogFragment extends DialogFragment {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.remove(this);
                 ft.addToBackStack(null);
-                dismiss();
+               // ft.commit();
+               // dismiss();
                 new MyDialogFragment().show(getFragmentManager(),"second pop");
             }
             break;
