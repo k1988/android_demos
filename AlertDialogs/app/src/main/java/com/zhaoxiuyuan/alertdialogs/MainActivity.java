@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     public void onClick() {
     }
 
-    @OnClick({R.id.btnAlertDialogRadioGroup, R.id.btnAlertDialogCheckGroup, R.id.btnAlertDialog, R.id.btnCustomAlertDialog})
+    @OnClick({R.id.btnAlertDialogRadioGroup, R.id.btnAlertDialogCheckGroup, R.id.btnAlertDialog, R.id.btnCustomAlertDialog,R.id.btnCustomDialogFragment})
     public void OnAlertDialogClick(View view) {
         switch (view.getId()) {
             case R.id.btnAlertDialog:
@@ -147,6 +147,12 @@ public class MainActivity extends AppCompatActivity {
                         .create();
                 dialog.show();
                 Toast.makeText(this, "After custom AlertDialog show.", Toast.LENGTH_SHORT).show();
+            }
+            break;
+            case R.id.btnCustomDialogFragment:
+            {
+                // 使用DialogFragment来管理对话框，当旋转屏幕和按下后退键时可以更好的管理其声明周期，它和Fragment有着基本一致的声明周期。且DialogFragment也允许开发者把Dialog作为内嵌的组件进行重用，类似Fragment
+                new MyDialogFragment().show(getFragmentManager(),"myDialog");
             }
             break;
         }

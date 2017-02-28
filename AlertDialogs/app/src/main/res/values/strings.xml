@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AlertDialogs</string>
+    <string name="button_dialog_fragment">DialogFragment示例</string>
 </resources>
