@@ -10,8 +10,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.zhaoxiuyuan.demos.layouts.MainActivity">
 
-    <TextView
+    <Button
+        android:text="TabLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:id="@+id/buttonTabLayout"
+        android:layout_alignParentTop="true"
+        android:textAllCaps="false" />
 </RelativeLayout>
