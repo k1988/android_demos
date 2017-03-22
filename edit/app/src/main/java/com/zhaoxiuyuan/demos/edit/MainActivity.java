@@ -48,8 +48,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        // 设置软键盘动作时必须指定InputType，默认Type是不会使软键盘生效按钮
-        mEdtSearch.setInputType(InputType.TYPE_CLASS_TEXT);
+        // FIXME：设置软键盘动作时必须重新指定InputType，默认Type是不会使软键盘出现特殊按钮(因为默认是多行，所以直接显示回车按钮了）
+        Log.d(TAG, String.format("onCreate: mEdtSearch default input type is %x", mEdtSearch.getInputType()));
+        mEdtSearch.setInputType(InputType.TYPE_CLASS_TEXT );
         // 代码动态设置软键盘动作
         mEdtSearch.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         mEdtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -120,15 +121,13 @@ public class MainActivity extends AppCompatActivity {
     public void onClickFocus(View view) {
         switch (view.getId()) {
             case R.id.btnFocusIn:
-                // 用代码将焦点切换到某Edit控件，并不会自动打开小键盘
+                // FIXME：用代码将焦点切换到某Edit控件，并不会自动打开小键盘
                 mEdtSearch.requestFocus();
                 break;
             case R.id.btnFocusOut:
-                // 焦点已经在编辑框的情况下，点击按钮清除编辑框的焦点，会触发两次focus change
-                // 一次是hasFocus是false，一次是true。代表焦点切出后又切回来？
+                // FIXME：焦点已经在编辑框的情况下，点击按钮清除编辑框的焦点，会触发两次focus change一次是hasFocus是false，一次是true。代表焦点切出后又切回来？
                 mEdtSearch.clearFocus();
-                // 如果FocusableInTouchMode和Focusable有一个为false，则requestFocus和点击都不会得到焦点
-                // 但点击时会有动画效果
+                // FIXME：如果FocusableInTouchMode和Focusable有一个为false，则requestFocus和点击都不会得到焦点但点击时会有动画效果
                 if (!findViewById(R.id.editTextCustom).requestFocus()) {
                     Log.d(TAG, "onClickFocus: requestFocus Failed!");
                 }
