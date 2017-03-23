@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -28,10 +29,6 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.edtSearch)
     EditText mEdtSearch;
-    @BindView(R.id.btnShowKeyboard)
-    Button btnShowKeyboard;
-    @BindView(R.id.btnHideKeyboard)
-    Button btnHideKeyboard;
     @BindView(R.id.btnFocusIn)
     Button btnFocusIn;
     @BindView(R.id.btnFocusOut)
@@ -42,6 +39,16 @@ public class MainActivity extends AppCompatActivity {
     EditText editTextCustom;
     @BindView(R.id.btnEnableFocus)
     Button btnEnableFocus;
+    @BindView(R.id.editTextFocusUnable)
+    EditText editTextFocusUnable;
+    @BindView(R.id.btnShowForce)
+    Button btnShowForce;
+    @BindView(R.id.btnShowImplicit)
+    Button btnShowImplicit;
+    @BindView(R.id.btnHideImplicitOnly)
+    Button btnHideImplicitOnly;
+    @BindView(R.id.btnHideNotAlways)
+    Button btnHideNotAlways;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         // FIXME：设置软键盘动作时必须重新指定InputType，默认Type是不会使软键盘出现特殊按钮(因为默认是多行，所以直接显示回车按钮了）
         Log.d(TAG, String.format("onCreate: mEdtSearch default input type is %x", mEdtSearch.getInputType()));
-        mEdtSearch.setInputType(InputType.TYPE_CLASS_TEXT );
+        mEdtSearch.setInputType(InputType.TYPE_CLASS_TEXT);
         // 代码动态设置软键盘动作
         mEdtSearch.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         mEdtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -77,15 +84,14 @@ public class MainActivity extends AppCompatActivity {
                     * 1.如果是从一个TextEdit切换到另外一个TextEdit，有些系统\输入法窗口会闪烁一次。如果在标题栏处有显示键盘图标的，图标也会闪烁一次
                     * 2.好多可以点击的元素，比如背景，比如按钮，并不会抢占TextEdit的焦点或者说抢完后会还回去。
                     */
-                    hideKeyboard(v);
+                    //hideKeyboard(v);
                 }
             }
         });
-
         editTextSend.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEND){
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
                     Log.d(TAG, "onEditorAction: IME_ACTION_SEND");
                 }
                 return false;
@@ -93,26 +99,76 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void hideKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        //imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS); //切换键盘显示
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0); //强制隐藏键盘
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+
+        return super.dispatchTouchEvent(ev);
+        // 通过重载dispatchTouchEvent来判断接收到点击事件时，当前焦点控件是否是EditText并且所在位置就是点击所在区域。如果不是则隐藏键盘
+//        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+//            View v = getCurrentFocus();
+//            if (isShouldHideInput(v, ev)) {
+//                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//                if (imm != null) {
+//                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+//                }
+//            }
+//            return super.dispatchTouchEvent(ev);
+//        }
+
+        // 必不可少，否则所有的组件都不会有TouchEvent了
+//        if (getWindow().superDispatchTouchEvent(ev)) {
+//            return true;
+//        }
+//        return onTouchEvent(ev);
     }
 
-    private void showKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
+    public boolean isShouldHideInput(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] leftTop = {0, 0};
+            //获取输入框当前的location位置
+            v.getLocationInWindow(leftTop);
+            int left = leftTop[0];
+            int top = leftTop[1];
+            int bottom = top + v.getHeight();
+            int right = left + v.getWidth();
+            if (event.getX() > left && event.getX() < right && event.getY() > top && event.getY() < bottom) {
+                // 点击的是输入框区域，保留点击EditText的事件
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
     }
 
-    @OnClick({R.id.btnShowKeyboard, R.id.btnHideKeyboard})
+    @OnClick({R.id.btnShowForce, R.id.btnShowImplicit, R.id.btnHideImplicitOnly, R.id.btnHideNotAlways,R.id.btnHideNoFlag,R.id.btnShowNoFlag})
     public void onClick(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         Log.d(TAG, "onClick: ");
         switch (view.getId()) {
-            case R.id.btnShowKeyboard:
-                showKeyboard(mEdtSearch);
+            case R.id.btnShowNoFlag:
+                // FIXME: 默认打开的键盘，可以用btnHideNotAlways和0来隐藏
+                imm.showSoftInput(mEdtSearch, 0);
                 break;
-            case R.id.btnHideKeyboard:
-                hideKeyboard(mEdtSearch);
+            case R.id.btnShowForce:
+                // FIXME: SHOW_FORCED 显示的键盘，只能用0标志来隐藏
+                imm.showSoftInput(mEdtSearch, InputMethodManager.SHOW_FORCED);
+                break;
+            case R.id.btnShowImplicit:
+                // FIXME: SHOW_IMPLICIT 显示的键盘，可以用任意标志隐藏
+                imm.showSoftInput(mEdtSearch, InputMethodManager.SHOW_IMPLICIT);
+                break;
+            case R.id.btnHideNoFlag:
+                // FIXME: 第二个参数设置成0时，可以隐藏所有键盘
+                imm.hideSoftInputFromWindow(mEdtSearch.getWindowToken(), 0);
+                break;
+            case R.id.btnHideNotAlways:
+                // FIXME: HIDE_NOT_ALWAYS 能隐藏点击编辑框自动弹出的键盘(可能也是标志为0的键盘)、通过SHOW_IMPLICIT标志显示的键盘；
+                imm.hideSoftInputFromWindow(mEdtSearch.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                break;
+            case R.id.btnHideImplicitOnly:
+                // FIXME: HIDE_IMPLICIT_ONLY 仅能隐藏通过SHOW_IMPLICIT标志显示的键盘；
+                imm.hideSoftInputFromWindow(mEdtSearch.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
                 break;
         }
     }

@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zhaoxiuyuan.demos.edit.MainActivity"
-    android:orientation="vertical"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context="com.zhaoxiuyuan.demos.edit.MainActivity">
 
     <!--TextView
         android:layout_width="match_parent"
@@ -25,89 +25,146 @@
         android:id="@+id/edtSearch"
         android:layout_width="match_parent"
         android:layout_height="43dp"
+        android:layout_gravity="center"
         android:hint="搜索框|killFocus时隐藏键盘"
+        android:maxLines="1"
         android:selectAllOnFocus="true"
         android:text=""
         android:textColorHint="#999999"
-        android:layout_gravity="center"
-        android:textSize="15sp"
-        android:maxLines="1"/>
+        android:textSize="15sp"/>
 
     <EditText
         android:id="@+id/editTextFocusUnable"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:hint="FocusableInTouchMode=false|Focusable=false"
         android:selectAllOnFocus="true"
         android:text=""
         android:textColorHint="#999999"
-        android:textSize="15sp"
-        android:focusableInTouchMode="false"
-        android:focusable="false"/>
+        android:textSize="15sp"/>
+
     <EditText
         android:id="@+id/editTextSend"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:hint="发送框|inputType=default"
+        android:imeOptions="actionSend"
+        android:inputType="text"
         android:selectAllOnFocus="true"
         android:text=""
         android:textColorHint="#999999"
-        android:textSize="15sp"
-        android:imeOptions="actionSend"
-        android:inputType="text"/>
+        android:textSize="15sp"/>
 
     <EditText
         android:id="@+id/editTextCustom"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:text=""
-        android:selectAllOnFocus="true"
         android:hint="自定义|inputType=text"
+        android:imeActionId="1024"
+        android:imeActionLabel="自定义"
+        android:inputType="text"
+        android:selectAllOnFocus="true"
+        android:text=""
         android:textColorHint="#999999"
         android:textSize="15sp"
-        android:inputType="text"
-        android:imeActionLabel="自定义"
-        android:imeActionId="1024"
-       />
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <Button
-            android:id="@+id/btnShowKeyboard"
-            android:layout_width="88dp"
-            android:layout_height="wrap_content"
-            android:text="显示键盘"/>
 
         <Button
-            android:id="@+id/btnHideKeyboard"
+            android:id="@+id/btnShowForce"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="隐藏键盘"/>
+            android:text="SHOW_FORCE"
+            android:textAllCaps="false"
+            android:textSize="8sp"
+            />
+
+        <Button
+            android:id="@+id/btnShowNoFlag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show_0"
+            android:textAllCaps="false"
+            android:textSize="8sp"
+            />
+
+        <Button
+            android:id="@+id/btnShowImplicit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SHOW_IMPLICIT"
+            android:textAllCaps="false"
+            android:textSize="8sp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnHideNoFlag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hide_0"
+            android:textAllCaps="false"
+            android:textSize="8sp"
+            />
+
+        <Button
+            android:id="@+id/btnHideNotAlways"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HIDE_NOT_ALWAYS"
+            android:textAllCaps="false"
+            android:textSize="8sp"
+            />
+
+        <Button
+            android:id="@+id/btnHideImplicitOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HIDE_IMPLICIT_ONLY"
+            android:textAllCaps="false"
+            android:textSize="8sp"
+            />
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnFocusIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="切入焦点1"/>
+
         <Button
             android:id="@+id/btnFocusOut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="切出焦点1-3"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+
         <Button
+            android:id="@+id/btnEnableFocus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnEnableFocus"
-            android:text="focusable=true|focusableInTouchMode=true"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:text="focusable=true|focusableInTouchMode=true"
             android:textAllCaps="false"
+            android:textSize="8sp"
             />
-    </LinearLayout>
+
+
+    </GridLayout>
 </LinearLayout>
