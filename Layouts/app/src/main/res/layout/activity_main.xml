@@ -21,4 +21,14 @@
         android:id="@+id/buttonTabLayout"
         android:layout_alignParentTop="true"
         android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/buttonLinearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/buttonTabLayout"
+        android:layout_toEndOf="@+id/buttonTabLayout"
+        android:layout_toRightOf="@+id/buttonTabLayout"
+        android:text="LinearLayout测试WrapContent"
+        android:textAllCaps="false"/>
 </RelativeLayout>

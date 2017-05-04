@@ -17,13 +17,17 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.buttonTabLayout)
+    @OnClick({R.id.buttonTabLayout, R.id.buttonLinearLayout})
     public void onClick(View view) {
-        switch (view.getId())
-        {
-            case R.id.buttonTabLayout:
-            {
+        switch (view.getId()) {
+            case R.id.buttonTabLayout: {
                 Intent intent = new Intent(this, TabLayoutActivity.class);
+                intent.setPackage(getPackageName());
+                startActivity(intent);
+            }
+            break;
+            case R.id.buttonLinearLayout: {
+                Intent intent = new Intent(this, LinearLayoutActivity.class);
                 intent.setPackage(getPackageName());
                 startActivity(intent);
             }
