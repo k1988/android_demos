@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -45,8 +46,8 @@ public class TabLayoutActivity extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setOffscreenPageLimit(1);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setOffscreenPageLimit(3);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -98,6 +99,12 @@ public class TabLayoutActivity extends AppCompatActivity {
         public PlaceholderFragment() {
         }
 
+        @Override
+        public void setUserVisibleHint(boolean isVisibleToUser) {
+            Log.d(TAG, "setUserVisibleHint() called with: isVisibleToUser = [" + isVisibleToUser + "], pos: " + getArguments().getInt(ARG_SECTION_NUMBER));
+            super.setUserVisibleHint(isVisibleToUser);
+        }
+
         /**
          * Returns a new instance of this fragment for the given section
          * number.
@@ -139,6 +146,7 @@ public class TabLayoutActivity extends AppCompatActivity {
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
+        private static final String TAG = "SectionsPagerAdapter";
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -148,13 +156,31 @@ public class TabLayoutActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+            Log.d(TAG, "getItem() called with: position = [" + (position + 1) + "]");
             return PlaceholderFragment.newInstance(position + 1);
         }
 
         @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Log.d(TAG, "instantiateItem() called with:  position = [" + (position + 1) + "]");
+            return super.instantiateItem(container, position);
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            Log.d(TAG, "destroyItem() called with: container position = [" + (position + 1) + "], object = [" + object + "]");
+            super.destroyItem(container, position, object);
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            Log.d(TAG, "getItemPosition() called with: object = [" + object + "]");
+            return super.getItemPosition(object);
+        }
+
+        @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return 5;
         }
 
         @Override
@@ -166,8 +192,9 @@ public class TabLayoutActivity extends AppCompatActivity {
                     return "下载";
                 case 2:
                     return "我的";
+                default:
+                    return String.valueOf(position+1);
             }
-            return null;
         }
     }
 }
