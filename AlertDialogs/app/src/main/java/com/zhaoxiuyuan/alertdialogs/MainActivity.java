@@ -68,11 +68,19 @@ public class MainActivity extends AppCompatActivity {
     public void onClick() {
     }
 
-    @OnClick({R.id.btnAlertDialogRadioGroup, R.id.btnAlertDialogCheckGroup, R.id.btnAlertDialog, R.id.btnCustomAlertDialog,R.id.btnCustomDialogFragment})
+    @OnClick({R.id.btnAlertDialogRadioGroup, R.id.btnAlertDialogCheckGroup, R.id.btnAlertDialog, R.id.btnCustomAlertDialog, R.id.btnCustomDialogFragment, R.id.btnAlertDialogThreeButton})
     public void OnAlertDialogClick(View view) {
         switch (view.getId()) {
             case R.id.btnAlertDialog:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("对话框标题")
+                        .setMessage("这是对话框内容")
+                        .setNegativeButton("取消", null)
+                        .setPositiveButton("确定", null)
+                        .show();
+                break;
+            case R.id.btnAlertDialogThreeButton:
+                builder = new AlertDialog.Builder(this);
                 builder.setTitle("对话框标题")
                         .setMessage("这是对话框内容")
                         .setNegativeButton("NegativeButton", null)
@@ -80,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                         .setNeutralButton("NeutralButton", null)
                         .show();
                 break;
+
             case R.id.btnAlertDialogRadioGroup: {
                 final String[] fruits = new String[]{"苹果", "雪梨", "香蕉", "葡萄", "西瓜"};
                 AlertDialog alert = null;
@@ -149,10 +158,9 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "After custom AlertDialog show.", Toast.LENGTH_SHORT).show();
             }
             break;
-            case R.id.btnCustomDialogFragment:
-            {
+            case R.id.btnCustomDialogFragment: {
                 // 使用DialogFragment来管理对话框，当旋转屏幕和按下后退键时可以更好的管理其声明周期，它和Fragment有着基本一致的声明周期。且DialogFragment也允许开发者把Dialog作为内嵌的组件进行重用，类似Fragment
-                new MyDialogFragment().show(getFragmentManager(),"myDialog");
+                new MyDialogFragment().show(getFragmentManager(), "myDialog");
             }
             break;
         }

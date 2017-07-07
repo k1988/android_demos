@@ -57,6 +57,14 @@
         android:layout_below="@+id/btnTimePickerDialog"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+    <Button
+        android:id="@+id/btnAlertDialogThreeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="三按钮对话框"
+        android:layout_above="@+id/btnAlertDialogRadioGroup"
+        android:layout_toRightOf="@+id/btnCustomAlertDialog"
+        android:layout_toEndOf="@+id/btnCustomAlertDialog"/>
 
     <Button
         android:id="@+id/btnTimePickerDialog"
@@ -72,10 +80,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="单选组对话框"
-        android:layout_alignBaseline="@+id/btnAlertDialog"
-        android:layout_alignBottom="@+id/btnAlertDialog"
-        android:layout_alignLeft="@+id/btnProgressDialog2"
-        android:layout_alignStart="@+id/btnProgressDialog2" />
+        android:layout_above="@+id/btnCustomDialogFragment"
+        android:layout_toRightOf="@+id/btnCustomAlertDialog"
+        android:layout_toEndOf="@+id/btnCustomAlertDialog"/>
 
     <Button
         android:id="@+id/btnAlertDialogCheckGroup"

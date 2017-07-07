@@ -1,1 +1,1 @@
-include ':AlertDialogs:app', ':edit:app', ':installevent:app', ':Layouts:app', ':ThreadPool:app'
+include ':AlertDialogs:app', ':edit:app', ':installevent:app', ':Layouts:app', ':ThreadPool:app', ':envdetect'
