@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">ndk_test</string>
+    <string name="title_home">hello jni</string>
+    <string name="title_dashboard">hello-gl2</string>
+    <string name="title_notifications">Notifications</string>
+</resources>
