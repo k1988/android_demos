@@ -1,1 +1,1 @@
-include ':AlertDialogs:app', ':edit:app', ':installevent:app', ':Layouts:app', ':ThreadPool:app', ':envdetect', ':flavortest', ':proguardtest', ':ndk_test'
+include ':AlertDialogs:app', ':edit:app', ':installevent:app', ':Layouts:app', ':ThreadPool:app', ':envdetect', ':flavortest', ':proguardtest', ':ndk_test', ':sensor'
